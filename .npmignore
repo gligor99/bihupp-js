@@ -1,0 +1,7 @@
+playground
+tests
+src
+node_modules
+*.log
+.DS_Store
+

@@ -1,0 +1,18 @@
+{
+  "name": "bihupp-js-playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "bihupp-js": "file:..",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.5",
+    "tsx": "^4.20.5",
+    "typescript": "^5.7.0"
+  }
+}
+
