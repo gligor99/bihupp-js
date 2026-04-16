@@ -256,15 +256,37 @@ Amount.fromString("9862"); // 98.62 BAM — from string pennies
 
 ### Field constraints
 
-| Field          | Max length | Notes                         |
-| -------------- | ---------- | ----------------------------- |
-| `name`         | 50         | Recipient or sender           |
-| `addressLine1` | 50         | Street + number               |
-| `addressLine2` | 25         | Postcode + city               |
-| `account`      | 16         | Digits only                   |
-| `purpose`      | 110        | Newlines normalized to spaces |
-| `reference`    | 30         |                               |
-| `phoneNumber`  | 15         | E.164, must start with `+`    |
+#### Sender / Recipient
+
+| Field                 | Max length | Format / Notes                          |
+| --------------------- | ---------- | --------------------------------------- |
+| `name`                | 50         | Alphanumeric + allowed chars            |
+| `addressLine1`        | 50         | Street + number                         |
+| `addressLine2`        | 25         | Postcode + city                         |
+| `phoneNumber`         | 15         | E.164, must start with `+`              |
+| sender `account`      | 16         | Digits only                              |
+| recipient `account(s)`| —          | 1–20 accounts, digits only, comma-separated |
+
+#### Payment detail
+
+| Field       | Max length | Format / Notes                               |
+| ----------- | ---------- | -------------------------------------------- |
+| `purpose`   | 110        | Newlines normalized to spaces                 |
+| `reference` | 30         |                                              |
+| `amount`    | 15         | Integer pennies (pfeninzi), **zero-padded**  |
+
+#### Public revenue fields
+
+| Field                 | Length | Format           |
+| --------------------- | ------ | ---------------- |
+| `senderTaxId`         | 13     | Exactly 13 digits (JIB/JMBG) |
+| `paymentType`         | 1      | Single digit (`0`–`9`)       |
+| `revenueType`         | 6      | Exactly 6 digits             |
+| `taxPeriodStartDate`  | 8      | `ddMMyyyy` (8 digits)        |
+| `taxPeriodEndDate`    | 8      | `ddMMyyyy` (8 digits)        |
+| `municipalCode`       | 3      | Exactly 3 digits             |
+| `budgetOrgCode`       | 7      | Exactly 7 digits             |
+| `paymentReference`    | 10     | Exactly 10 digits            |
 
 ### Allowed character set
 

@@ -51,7 +51,10 @@ const recipientSchema = z.object({
   name: z.object({ value: nameSchema }),
   address: addressSchema,
   account: z.object({
-    accounts: recipientAccountListSchema,
+    accounts: recipientAccountListSchema.refine(
+      (accounts) => accounts.map((a) => a.value).join(",").length <= 339,
+      { message: "Recipient account(s) must not exceed 339 characters." },
+    ),
   }),
 });
 
@@ -59,9 +62,10 @@ const phoneNumberSchema = z.object({
   value: z
     .string()
     .max(15, "Phone number must not exceed 15 characters.")
-    .refine((value) => value.startsWith("+"), {
-      message: "Phone number must be in E.164 format starting with +.",
-    }),
+    .regex(
+      /^\+[1-9]\d{1,14}$/,
+      'Phone number must be in E.164 format: "+" followed by digits only (max 15 chars).',
+    ),
 });
 
 const senderSchema = z.object({

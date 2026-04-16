@@ -244,6 +244,32 @@ describe("Validation", () => {
     ).toThrow(BihuppValidationError);
   });
 
+  it("throws on phone with non-digits after +", () => {
+    expect(
+      () =>
+        new PaymentInstruction({
+          recipient,
+          amount: Amount.fromPennies(100),
+          purpose: PaymentPurpose.of("Test"),
+          sender: { ...sender, phoneNumber: PhoneNumber.of("+38761ABC567") },
+        }),
+    ).toThrow(BihuppValidationError);
+  });
+
+  it("throws on too-long E.164 phone number", () => {
+    // + + 15 digits = 16 total chars (exceeds max 15)
+    const tooLong = `+${"1".repeat(15)}`;
+    expect(
+      () =>
+        new PaymentInstruction({
+          recipient,
+          amount: Amount.fromPennies(100),
+          purpose: PaymentPurpose.of("Test"),
+          sender: { ...sender, phoneNumber: PhoneNumber.of(tooLong) },
+        }),
+    ).toThrow(BihuppValidationError);
+  });
+
   it("accepts Bosnian diacritics", () => {
     expect(
       () =>

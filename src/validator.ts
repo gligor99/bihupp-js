@@ -44,6 +44,16 @@ function assertSingleDigit(field: string, value: string): void {
   }
 }
 
+// E.164 format: + followed by 1-14 digits, first digit 1-9 (max total length 15)
+function assertE164PhoneNumber(field: string, value: string): void {
+  if (!/^\+[1-9]\d{1,14}$/.test(value)) {
+    throw new BihuppValidationError(
+      field,
+      `Must be in E.164 format: "+" followed by digits only (max 15 chars), got "${value}".`,
+    );
+  }
+}
+
 // Date format ddMMyyyy
 function assertDateFormat(field: string, value: string): void {
   if (!/^\d{8}$/.test(value)) {
@@ -100,6 +110,9 @@ export function validatePaymentInstruction(
     assertOnlyDigits(`recipient.account[${i}]`, acc.value);
     assertMaxLength(`recipient.account[${i}]`, acc.value, 16);
   }
+  // RecipientAccount line is comma-separated accounts (1–20), max 339 chars in BIHUPP10
+  const recipientAccountsLine = accounts.map((a) => a.value).join(",");
+  assertMaxLength("recipient.account", recipientAccountsLine, 339);
 
   // Amount
   if (params.amount.pennies < 0) {
@@ -152,13 +165,8 @@ export function validatePaymentInstruction(
 
     if (params.sender.phoneNumber != null) {
       const phone = params.sender.phoneNumber.value;
-      if (!phone.startsWith("+")) {
-        throw new BihuppValidationError(
-          "sender.phoneNumber",
-          "Phone number must be in E.164 format starting with +.",
-        );
-      }
       assertMaxLength("sender.phoneNumber", phone, 15);
+      assertE164PhoneNumber("sender.phoneNumber", phone);
     }
   }
 
