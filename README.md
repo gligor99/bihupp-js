@@ -249,10 +249,10 @@ Amount.fromString("9862"); // 98.62 BAM — from string pennies
 | `recipient`       | `Recipient`                        | ✅       | —           |                          |
 | `purpose`         | `PaymentPurpose`                   | ✅       | —           | Max 110 chars            |
 | `amount`          | `Amount`                           | ✅       | —           | Integer pennies          |
-| `sender`          | `Sender \| null`                   | ❌       | `null`      | `null` = bank auto-fills |
-| `reference`       | `PaymentReference \| null`         | ❌       | `null`      | Max 30 chars             |
+| `sender`          | `Sender \| null`                   | ❌       | `undefined` | Omit / `null` = bank auto-fills |
+| `reference`       | `PaymentReference \| null`         | ❌       | `undefined` | Max 30 chars             |
 | `paymentPriority` | `PaymentPriority`                  | ❌       | `regular()` | `N` or `D`               |
-| `publicRevenue`   | `PublicRevenueInstruction \| null` | ❌       | `null`      | Tax/fee payments         |
+| `publicRevenue`   | `PublicRevenueInstruction \| null` | ❌       | `undefined` | Tax/fee payments         |
 
 ### Field constraints
 

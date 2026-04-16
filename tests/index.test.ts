@@ -76,6 +76,8 @@ describe("PaymentInstruction", () => {
     expect(lines[12]).toBe("000000000009862");
     expect(lines[13]).toBe("BAM");
     expect(lines[14]).toBe("N");
+    expect(lines).toHaveLength(23);
+    expect(lines.slice(15)).toEqual(["", "", "", "", "", "", "", ""]);
   });
 
   it("handles null sender with empty block", () => {
@@ -92,6 +94,7 @@ describe("PaymentInstruction", () => {
     expect(lines[3]).toBe("");
     expect(lines[4]).toBe("");
     expect(lines[10]).toBe("");
+    expect(lines).toHaveLength(23);
   });
 
   it("handles urgent payment priority", () => {
@@ -102,7 +105,9 @@ describe("PaymentInstruction", () => {
       paymentPriority: PaymentPriority.urgent(),
     });
 
-    expect(instruction.lines()[14]).toBe("D");
+    const lines = instruction.lines();
+    expect(lines[14]).toBe("D");
+    expect(lines).toHaveLength(23);
   });
 
   it("handles multiple recipient accounts", () => {
@@ -161,6 +166,7 @@ describe("PaymentInstruction", () => {
     expect(lines[1]).toBe("Marko Marković");
     expect(lines[7]).toBe("Vodovod d.o.o.");
     expect(lines[12]).toBe("000000000009862");
+    expect(lines).toHaveLength(23);
   });
 });
 
@@ -294,5 +300,48 @@ describe("parsePaymentInstruction", () => {
   it("returns failure for too-short payload", () => {
     const result = parsePaymentInstruction("BIHUPP10\nonly two lines");
     expect(result.success).toBe(false);
+  });
+
+  it("ignores currency line and defaults to BAM semantics", () => {
+    const original = new PaymentInstruction({
+      recipient,
+      amount: Amount.fromPennies(100),
+      purpose: PaymentPurpose.of("Test"),
+      sender: null,
+    })
+      .toString()
+      .replace("\nBAM\n", "\nEUR\n");
+
+    const result = parsePaymentInstruction(original);
+    expect(result.success).toBe(true);
+  });
+
+  it("defaults unknown priority code to regular", () => {
+    const original = new PaymentInstruction({
+      recipient,
+      amount: Amount.fromPennies(100),
+      purpose: PaymentPurpose.of("Test"),
+      sender: null,
+    })
+      .toString()
+      .replace(/\nN$/, "\nX");
+
+    const result = parsePaymentInstruction(original);
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+    expect(result.instruction.paymentPriority?.code).toBe("N");
+  });
+
+  it("accepts payloads shorter than 23 lines by treating missing lines as empty", () => {
+    const original = new PaymentInstruction({
+      recipient,
+      amount: Amount.fromPennies(100),
+      purpose: PaymentPurpose.of("Test"),
+      sender: null,
+    }).toString();
+
+    const shortened = original.split("\n").slice(0, 15).join("\n");
+    const result = parsePaymentInstruction(shortened);
+    expect(result.success).toBe(true);
   });
 });

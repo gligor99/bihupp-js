@@ -69,19 +69,19 @@ export class PaymentInstruction {
       priority.code, // 14
     ];
 
-    if (p.publicRevenue != null) {
-      const pr = p.publicRevenue;
-      lines.push(
-        pr.senderTaxId,
-        pr.paymentType,
-        pr.revenueType,
-        pr.taxPeriodStartDate,
-        pr.taxPeriodEndDate,
-        pr.municipalCode,
-        pr.budgetOrgCode,
-        pr.paymentReference,
-      );
-    }
+    // Saša-b reference implementation always includes the public revenue block
+    // (lines 15–22), using empty lines when not applicable.
+    const pr = p.publicRevenue;
+    lines.push(
+      pr?.senderTaxId ?? "",
+      pr?.paymentType ?? "",
+      pr?.revenueType ?? "",
+      pr?.taxPeriodStartDate ?? "",
+      pr?.taxPeriodEndDate ?? "",
+      pr?.municipalCode ?? "",
+      pr?.budgetOrgCode ?? "",
+      pr?.paymentReference ?? "",
+    );
 
     return lines;
   }
