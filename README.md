@@ -310,4 +310,4 @@ validatePaymentInstructionWithSchema(params);
 
 ## License
 
-MIT
+MIT — see `LICENSE`.
