@@ -4,9 +4,7 @@ JavaScript/TypeScript library implementing the **BIHUPP10** standard for bank pa
 
 **BIHUPP** (_Bosansko-Hercegovački Unutrašnji Platni Promet_) defines a structured text payload that can be encoded as a QR code that banks scan to pre-fill payment forms. This format was established by the [Association of Banks of Bosnia and Herzegovina](https://ubbih.ba/).
 
-For React Native integration, see [`react-native-bihupp`](../react-native-bihupp).  
-For PHP, see [`php-bihupp-qrcode`](https://github.com/sasa-b/php-bihupp-qrcode).  
-For Kotlin/Android, see [`kotlin-bihupp-qrcode`](https://github.com/sasa-b/kotlin-bihupp-qrcode).
+Inspired by Saša B.'s BIHUPP QR libraries: [`php-bihupp-qrcode`](https://github.com/sasa-b/php-bihupp-qrcode) and [`kotlin-bihupp-qrcode`](https://github.com/sasa-b/kotlin-bihupp-qrcode).
 
 ---
 
