@@ -5,8 +5,11 @@ updates:
     schedule:
       interval: weekly
     groups:
+      # Only minor/patch updates are grouped; major updates get their
+      # own PR so a breaking bump doesn't block the rest.
       dev-dependencies:
         dependency-type: development
+        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:
