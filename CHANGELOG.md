@@ -1,3 +1,8 @@
+## Unreleased
+
+- **Breaking:** require Node.js 22 or newer (Node 18 and 20 are end-of-life).
+- Bump dev tooling to vitest 5 and tsup 9.
+
 ## 1.0.0
 
 - Initial BIHUPP10 implementation with:

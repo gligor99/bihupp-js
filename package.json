@@ -76,7 +76,7 @@
     "prepublishOnly": "npm run typecheck && npm run test:run && npm run build"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "peerDependencies": {
     "zod": "^4.0.0"
@@ -89,9 +89,9 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "publint": "^0.3.25",
-    "tsup": "^8.0.0",
+    "tsup": "^9.0.0",
     "typescript": "^5.7.0",
-    "vitest": "^2.0.0",
+    "vitest": "^5.0.5",
     "zod": "^4.6.7"
   },
   "publishConfig": {

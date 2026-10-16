@@ -10,7 +10,7 @@ Thanks for your interest in contributing! Bug reports, fixes and improvements ar
 
 ## Development setup
 
-Requires Node.js 18 or newer.
+Requires Node.js 22 or newer.
 
 ```bash
 git clone https://github.com/gligor99/bihupp-js.git
