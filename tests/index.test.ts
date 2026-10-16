@@ -12,8 +12,8 @@ import {
   RecipientAccount,
   PhoneNumber,
   BihuppValidationError,
-  validatePaymentInstructionWithSchema,
 } from "../src/index.js";
+import { validatePaymentInstructionWithSchema } from "../src/zod.js";
 
 // Fixtures
 

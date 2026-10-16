@@ -1,0 +1,47 @@
+name: Release
+
+# Publishes to npm when a version tag (e.g. v1.0.1) is pushed.
+# Uses npm trusted publishing (OIDC): no NPM_TOKEN secret needed and
+# provenance is attached automatically. Configure the trusted publisher
+# on npmjs.com -> package settings -> Trusted Publisher -> GitHub Actions
+# (repo: gligor99/bihupp-js, workflow: release.yml).
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm install -g npm@latest
+      - run: npm ci
+
+      - name: Check tag matches package.json version
+        run: |
+          PKG_VERSION="v$(node -p "require('./package.json').version")"
+          if [ "$PKG_VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json version $PKG_VERSION"
+            exit 1
+          fi
+
+      - run: npm run build
+      - run: npm run lint:pkg
+
+      # prepublishOnly also runs typecheck, tests and build
+      - run: npm publish
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes --verify-tag

@@ -1,10 +1,6 @@
 export { PaymentInstruction, PaymentInstructionBuilder } from "./builder.js";
 export { parsePaymentInstruction } from "./parser.js";
 export { validatePaymentInstruction } from "./validator.js";
-export {
-  paymentInstructionParamsSchema,
-  validatePaymentInstructionWithSchema,
-} from "./validation.schema.js";
 
 // Types & helpers
 export {

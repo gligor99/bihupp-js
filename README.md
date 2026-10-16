@@ -311,13 +311,17 @@ try {
 
 ### Zod schema-based validation (optional)
 
-For schema-driven validation and richer error information you can use the optional Zod layer:
+For schema-driven validation and richer error information you can use the optional Zod layer. It lives in a separate entry point, so the core package stays dependency-free. Install `zod` (v4) alongside:
+
+```bash
+npm install zod
+```
 
 ```ts
 import {
   paymentInstructionParamsSchema,
   validatePaymentInstructionWithSchema,
-} from "bihupp-js";
+} from "bihupp-js/zod";
 
 // Validate with Zod schema (throws ZodError on failure)
 const parsed = paymentInstructionParamsSchema.parse(params);
