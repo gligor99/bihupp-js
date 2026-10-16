@@ -1,6 +1,6 @@
 {
   "name": "bihupp-js",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "TypeScript/JavaScript library for BIHUPP10 payment QR payloads for Bosnia and Herzegovina.",
   "keywords": [
     "bihupp",
