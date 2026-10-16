@@ -332,6 +332,12 @@ validatePaymentInstructionWithSchema(params);
 
 ---
 
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for the development setup and guidelines. Found a bug? [Open an issue](https://github.com/gligor99/bihupp-js/issues/new/choose).
+
+---
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
